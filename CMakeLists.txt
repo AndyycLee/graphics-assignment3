@@ -48,8 +48,15 @@ add_executable(cube
   src/opengl_loader.cpp
 )
 
+add_executable(robot
+  src/robot.cpp
+  src/mesh.cpp
+  src/shader.cpp
+  src/opengl_loader.cpp
+)
+
 # Tell compiler where to find gl.h
-foreach(target sphere cube)
+foreach(target sphere cube robot)
     target_include_directories(${target} PRIVATE
         include
         ${stb_SOURCE_DIR}
@@ -76,5 +83,12 @@ foreach(target sphere cube)
         VERBATIM
     )
 endforeach()
+
+add_custom_command(TARGET robot POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_SOURCE_DIR}/assets"
+        "$<TARGET_FILE_DIR:robot>/assets"
+    VERBATIM
+)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT cube)

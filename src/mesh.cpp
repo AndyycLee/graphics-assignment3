@@ -191,6 +191,12 @@ void Mesh::applyTransform(const glm::mat4& transform)
     model *= transform;
 }
 
+
+void Mesh::setTransform(const glm::mat4& transform)
+{
+    model = transform;
+}
+
 void Mesh::draw(const glm::mat4& view, const glm::mat4& projection) const
 {
     shader.use();
